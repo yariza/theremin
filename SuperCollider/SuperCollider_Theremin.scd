@@ -5,7 +5,20 @@ f = 440;
 
 (x = {
     arg vol =0, pitch = 440 ;
-    vol * SinOsc.ar(pitch,0,1,0)
+    VarLag.kr(
+        vol,
+        0.032, // 30 hz
+        0,
+        \squared,
+    ) *
+    SinOsc.ar(
+        VarLag.kr(
+            pitch,
+            0.032, // 30 hz
+            0,
+            \squared
+        )
+    )
 }.play);
 
 o = OSCFunc({ 'increaseVol'.postln; 'hi'.postln; v = v + 0.01; x.set(\vol, v); }, '/foo1');
