@@ -42,7 +42,6 @@ public class ParameterControl : MonoBehaviour {
     void Update () {
 
         float dist = _volume.DistanceTo(transform.position);
-        Debug.Log(dist);
         float freq = 0f;
         if (_mode == ParameterMode.Linear)
         {

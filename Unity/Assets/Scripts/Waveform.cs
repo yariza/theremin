@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Renderer))]
 public class Waveform : MonoBehaviour {
 
 	Material _waveformMat;
@@ -15,6 +16,9 @@ public class Waveform : MonoBehaviour {
 
 	int _frequencyHash;
 
+    [SerializeField]
+    float _speed = 1f;
+
 	void Start()
 	{
 		_waveformMat = GetComponent<Renderer>().material;
@@ -24,9 +28,9 @@ public class Waveform : MonoBehaviour {
 	
 	void Update()
 	{
-		_displacement += Time.deltaTime * _frequency;
+        _displacement += Time.deltaTime * _speed * _frequency;
 		_displacement %= 2f * Mathf.PI;
 		_waveformMat.SetFloat(_displacementHash, _displacement);
-		_waveformMat.SetFloat(_frequencyHash, _frequency);
+		_waveformMat.SetFloat(_frequencyHash, _frequency * 2f);
 	}
 }

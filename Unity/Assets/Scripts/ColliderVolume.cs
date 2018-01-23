@@ -16,4 +16,9 @@ public class ColliderVolume : Volume {
     {
         return Vector3.Distance(_collider.ClosestPoint(position), position);
     }
+
+    public override Vector3 ClosestPoint(Vector3 position)
+    {
+        return _collider.ClosestPoint(position);
+    }
 }
