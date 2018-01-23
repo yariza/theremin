@@ -7,7 +7,7 @@
 using UnityEngine;
 using Valve.VR;
 
-public class SteamVR_ControllerManager : MonoBehaviour
+public class SteamVR_ControllerManager : GameSingleton<SteamVR_ControllerManager>
 {
 	public GameObject left, right;
 

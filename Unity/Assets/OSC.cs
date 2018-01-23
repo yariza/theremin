@@ -395,7 +395,7 @@ public delegate void OscMessageHandler(OscMessage oscM);
 /// of other parameters in Object form. 
 /// 
 /// </summary>
-public class OSC : MonoBehaviour
+public class OSC : GameSingleton<OSC>
 {
 
     public int inPort = 6969;
