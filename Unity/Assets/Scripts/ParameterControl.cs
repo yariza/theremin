@@ -24,19 +24,43 @@ public class ParameterControl : MonoBehaviour {
     Vector2 _distanceRange = new Vector3(0.1f, 1f);
 
     [SerializeField]
-    float _zeroBeat = 1f;
-
-    [SerializeField]
     AnimationCurve _valueCurve = AnimationCurve.Linear(0f, 0f, 1f, 1f);
 
-    FollowHandTarget _hand;
+    [SerializeField]
+    float _multiplier = 1f;
 
-    void Awake () {
-        _hand = GetComponent<FollowHandTarget>();
+    [SerializeField]
+    bool _debug;
+
+    OSC _osc;
+
+    void Start()
+    {
+        _osc = OSC.instance;
     }
-    
-    // Update is called once per frame
+
     void Update () {
-        
+
+        float dist = _volume.DistanceTo(transform.position);
+        float freq = 0f;
+        if (_mode == ParameterMode.Linear)
+        {
+            float input = Mathf.Clamp01((dist - _distanceRange.x) / (_distanceRange.y - _distanceRange.x));
+            freq = _valueCurve.Evaluate(input) * _multiplier;
+        }
+        else if (_mode == ParameterMode.Inverse)
+        {
+            freq = _multiplier / dist;
+        }
+
+        var message = new OscMessage();
+        message.address = _oscAddress;
+        message.values = new ArrayList(new[] { freq });
+        _osc.Send(message);
+
+        if (_debug)
+        {
+            Debug.Log(_oscAddress + ": " + freq);
+        }
     }
 }

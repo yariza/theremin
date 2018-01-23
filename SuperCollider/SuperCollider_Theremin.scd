@@ -1,9 +1,4 @@
-s.boot
-
-NetAddr.langPort;
-
-s.free
-
+s.boot;
 
 v = 0;
 f = 440;
@@ -18,7 +13,17 @@ q = OSCFunc({ 'increasePitch'.postln; 'hi'.postln; f = f - 1; x.set(\pitch, f); 
 
 r = OSCFunc({ 'decreasePitch'.postln; 'hi'.postln; f = f + 1; x.set(\pitch, f); }, '/foo4');
 
+(OSCFunc({
+    arg msg, time, addr, recvPort;
+    ('setPitch' + msg.length).postln;
+}, '/pitch'));
 
-x.play;
-x.free
+(OSCFunc({
+    arg msg, time, addr, recvPort;
+    ('setAmp' + msg).postln;
+}, '/amplitude'));
+
+
+// x.play;
+// x.free
 
